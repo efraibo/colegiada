@@ -20,6 +20,14 @@
 						th:field="*{nome}" size="50" /></td>
 					<td><input type="text" id="cargaHoraria"
 						placeholder="Carga Horária" th:field="*{cargaHoraria}" /></td>
+					<td>
+						<select class="form-control" id="modalidade" th:field="*{modalidade}">
+							<option style="text-transform: capitalize"
+									th:each="item : ${listaModalidades}"
+									th:value="${item}"
+									th:text="${item.text}" selected="selected"></option>
+						</select>
+					</td>
 					<td><button type="submit" class="btn btn-primary">Salvar</button>&nbsp;&nbsp;
 						<a th:href="@{/cursos/list}" class="btn btn-info">Novo curso</a></td>
 				</tr>
@@ -35,6 +43,7 @@
 				<tr>
 					<th>Nome</th>
 					<th>Carga horária</th>
+					<th>Modalidade</th>
 					<th>Editar</th>
 					<th>Remover</th>
 				</tr>
@@ -43,6 +52,8 @@
 				<tr th:each="curso : ${lista}">
 					<td th:text="${curso.nome}"></td>
 					<td th:text="${curso.cargaHoraria}"></td>
+					<td th:text="${curso.modalidade}"></td>
+
 					<td><a class="btn btn-warning"
 						th:href="@{/cursos/edit/{id}(id=${curso.id})}">Edit</a></td>
 					<td><a class="btn btn-warning"

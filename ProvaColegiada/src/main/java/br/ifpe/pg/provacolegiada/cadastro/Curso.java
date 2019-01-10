@@ -17,16 +17,18 @@ public class Curso {
 	private String nome;
 	@Min(value = 40)
 	private int cargaHoraria;
+	private EModalidade modalidade;
 
 	public Curso() {
 
 	}
 
-	public Curso(Integer id, String nome, int cargaHoraria) {
+	public Curso(Integer id, String nome, int cargaHoraria, EModalidade modalidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cargaHoraria = cargaHoraria;
+		this.modalidade = modalidade;
 	}
 
 	public Integer getId() {
@@ -51,6 +53,14 @@ public class Curso {
 
 	public void setCargaHoraria(int cargaHoraria) {
 		this.cargaHoraria = cargaHoraria;
+	}
+
+	public EModalidade getModalidade() {
+		return modalidade;
+	}
+
+	public void setModalidade(EModalidade modalidade) {
+		this.modalidade = modalidade;
 	}
 
 	@Override

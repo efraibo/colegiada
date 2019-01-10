@@ -25,6 +25,7 @@ public class CursoController {
 		ModelAndView mv = new ModelAndView("cadastros/cursos-list");
 		mv.addObject("lista", service.listarTodos());
 		mv.addObject("curso", curso);
+		mv.addObject("listaModalidades", EModalidade.values());
 		return mv;
 	}
 
