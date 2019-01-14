@@ -18,7 +18,9 @@ public class Turma {
 	@Enumerated(EnumType.STRING)
 	private Turno turno;
 	private int ano;
-	private int entrada;	
+	private int entrada;
+	private ESituacao situacao;
+
 	public Turma() {
 		super();
 	}
@@ -52,6 +54,12 @@ public class Turma {
 	public void setEntrada(int entrada) {
 		this.entrada = entrada;
 	}
-	
-	
+
+	public ESituacao getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(ESituacao situacao) {
+		this.situacao = situacao;
+	}
 }

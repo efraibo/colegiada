@@ -47,8 +47,20 @@
 				<tr>
 					<td>Entrada</td>
 					<td>
-					<input type="radio" id="entrada" placeholder="Entrada" th:field="*{entrada}" value="1" />1ª Entrada &nbsp;&nbsp;&nbsp;
-					<input type="radio" id="entrada" placeholder="Entrada" th:field="*{entrada}" value="2" />2ª Entrada
+					<input type="radio" id="primeiraEntrada" placeholder="Entrada" th:field="*{entrada}" value="1" />1ª Entrada &nbsp;&nbsp;&nbsp;
+					<input type="radio" id="segundaEntrada" placeholder="Entrada" th:field="*{entrada}" value="2" />2ª Entrada
+					</td>
+				</tr>
+				<tr>
+					<td>Situação</td>
+					<td>
+						<select class="form-control" id="situacao" th:field="*{situacao}">
+							<option value="">Selecione situação</option>
+							<option style="text-transform: capitalize"
+									th:each="item : ${listaSituacao}"
+									th:value="${item}"
+									th:text="${item.text}" selected="selected"></option>
+						</select>
 					</td>
 				</tr>
 				<tr>
@@ -73,6 +85,7 @@
 					<th>Turno</th>
 					<th>Ano</th>
 					<th>Entrada</th>
+					<th>Situação</th>
 					<th>Editar</th>
 					<th>Remover</th>
 				</tr>
@@ -83,6 +96,7 @@
 					<td th:text="${turma.turno.text}"></td>
 					<td th:text="${turma.ano}"></td>
 					<td th:text="${turma.entrada}"></td>
+					<td th:text="${turma.situacao.text}"></td>
 					<td><a class="btn btn-warning"
 						th:href="@{/turmas/edit/{id}(id=${turma.id})}">Editar</a></td>
 					<td><a class="btn btn-warning"

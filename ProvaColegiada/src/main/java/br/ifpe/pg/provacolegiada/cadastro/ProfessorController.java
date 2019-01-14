@@ -1,7 +1,5 @@
 package br.ifpe.pg.provacolegiada.cadastro;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -13,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/professores/")
@@ -41,6 +41,8 @@ public class ProfessorController {
 			mv.addObject("lista", professorService.buscarPorNome(professor.getNome()));
 		}
 		mv.addObject("professor", professor);
+		mv.addObject("listaAreasPesquisa", EAreasPesquisa.values());
+
 		return mv;
 	}
 

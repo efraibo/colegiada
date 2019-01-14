@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
@@ -19,16 +21,21 @@ public class Curso {
 	private int cargaHoraria;
 	private EModalidade modalidade;
 
+	@ManyToOne
+	@JoinColumn(name = "professor_id")
+	private Professor coordenadorCurso;
+
 	public Curso() {
 
 	}
 
-	public Curso(Integer id, String nome, int cargaHoraria, EModalidade modalidade) {
+	public Curso(Integer id, String nome, int cargaHoraria, EModalidade modalidade, Professor coordenadorCurso) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cargaHoraria = cargaHoraria;
 		this.modalidade = modalidade;
+		this.coordenadorCurso = coordenadorCurso;
 	}
 
 	public Integer getId() {
@@ -61,6 +68,14 @@ public class Curso {
 
 	public void setModalidade(EModalidade modalidade) {
 		this.modalidade = modalidade;
+	}
+
+	public Professor getCoordenadorCurso() {
+		return coordenadorCurso;
+	}
+
+	public void setCoordenadorCurso(Professor coordenadorCurso) {
+		this.coordenadorCurso = coordenadorCurso;
 	}
 
 	@Override

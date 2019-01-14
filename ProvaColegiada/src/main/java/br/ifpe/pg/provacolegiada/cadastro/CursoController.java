@@ -1,7 +1,5 @@
 package br.ifpe.pg.provacolegiada.cadastro;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -13,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/cursos/")
 public class CursoController {
@@ -20,12 +20,16 @@ public class CursoController {
 	@Autowired
 	private CursoService service;
 
+	@Autowired
+	private ProfessorService professorService;
+
 	@GetMapping("list")
 	public ModelAndView exibirLista(Curso curso) {
 		ModelAndView mv = new ModelAndView("cadastros/cursos-list");
 		mv.addObject("lista", service.listarTodos());
 		mv.addObject("curso", curso);
 		mv.addObject("listaModalidades", EModalidade.values());
+		mv.addObject("listaProfessores", professorService.listarTodas());
 		return mv;
 	}
 

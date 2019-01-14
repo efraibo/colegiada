@@ -16,9 +16,9 @@
 			<input type="hidden" id="id" th:field="*{id}" />
 			<table class="table table-striped">
 				<tr>
-					<td><input type="text" id="nome" placeholder="Nome do Curso"
+					<td><input type="text" id="nome" placeholder="Nome do Curso" style="height: 35px;"
 						th:field="*{nome}" size="50" /></td>
-					<td><input type="text" id="cargaHoraria"
+					<td><input type="text" id="cargaHoraria" style="height: 35px;"
 						placeholder="Carga Horária" th:field="*{cargaHoraria}" /></td>
 					<td>
 						<select class="form-control" id="modalidade" th:field="*{modalidade}">
@@ -26,6 +26,15 @@
 									th:each="item : ${listaModalidades}"
 									th:value="${item}"
 									th:text="${item.text}" selected="selected"></option>
+						</select>
+					</td>
+					<td>
+						<select class="form-control" id="coordenador" th:field="*{coordenadorCurso}">
+							<option value="">Selecione o coordenador</option>
+							<option style="text-transform: capitalize"
+									th:each="item : ${listaProfessores}"
+									th:value="${item.id}"
+									th:text="${item.nome}" selected="selected"></option>
 						</select>
 					</td>
 					<td><button type="submit" class="btn btn-primary">Salvar</button>&nbsp;&nbsp;
@@ -53,6 +62,7 @@
 					<td th:text="${curso.nome}"></td>
 					<td th:text="${curso.cargaHoraria}"></td>
 					<td th:text="${curso.modalidade}"></td>
+					<td th:text="${curso.coordenadorCurso}"></td>
 
 					<td><a class="btn btn-warning"
 						th:href="@{/cursos/edit/{id}(id=${curso.id})}">Edit</a></td>

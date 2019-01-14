@@ -38,6 +38,30 @@
 					placeholder="Carga Horária" th:field="*{cargaHoraria}" /></td>
 				</tr>
 				<tr>
+					<td>Quantidade de períodos:</td>
+					<td>
+						<select class="form-control" id="periodo" th:field="*{periodo}">
+							<option value="">Selecione período</option>
+							<option style="text-transform: capitalize"
+									th:each="item : ${listaPeriodos}"
+									th:value="${item}"
+									th:text="${item.text}" selected="selected"></option>
+						</select>
+					</td>
+				</tr>
+				<tr th:if="${!listaTodas.isEmpty() && listaTodas != null}">
+					<td>Pré-requisitos:</td>
+					<td>
+						<select id="preRequisitos" th:field="*{preRequisitos}" multiple="multiple">
+							<option th:each="item : ${listaTodas}"
+									th:value="${{item.id}}"
+									th:text="${item.nome}">
+								Cinema
+							</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
 					<td colspan="2" align="right">
 						<button type="submit" class="btn btn-primary"  name="action" value="salvar">Salvar</button>&nbsp;&nbsp;					
 						<button type="submit" class="btn btn-info" name="action" value="pesquisar">Pesquisar</button>&nbsp;&nbsp;
@@ -63,10 +87,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="disciplina : ${lista}">
+				<tr th:each="disciplina : ${listaTodas}">
 					<td th:text="${disciplina.curso.nome}"></td>
 					<td th:text="${disciplina.nome}"></td>
 					<td th:text="${disciplina.cargaHoraria}"></td>
+					<td th:text="${disciplina.periodo.text}"></td>
 					<td><a class="btn btn-warning"
 						th:href="@{/disciplinas/edit/{id}(id=${disciplina.id})}">Editar</a></td>
 					<td><a class="btn btn-warning"

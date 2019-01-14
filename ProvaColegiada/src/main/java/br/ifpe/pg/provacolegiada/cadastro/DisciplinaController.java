@@ -1,7 +1,5 @@
 package br.ifpe.pg.provacolegiada.cadastro;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -13,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/disciplinas/")
@@ -38,12 +38,13 @@ public class DisciplinaController {
 	public ModelAndView pesquisar(Disciplina disciplina) {
 		ModelAndView mv = new ModelAndView("cadastros/disciplinas-list");
 		if (disciplina == null || disciplina.getNome() == null) {
-			mv.addObject("lista", disciplinaService.listarTodas());	
+			mv.addObject("listaTodas", disciplinaService.listarTodas());
 		} else {
 			mv.addObject("lista", disciplinaService.buscarPorNomeCurso(disciplina.getNome(), disciplina.getCurso().getId())); // .buscarPorExemplo(disciplina)); // .buscarPorNome(disciplina.getNome()));	
 		}
 		mv.addObject("listaCursos", cursoService.listarTodos());
 		mv.addObject("disciplina", disciplina);
+		mv.addObject("listaPeriodos", EPeriodo.values());
 		return mv;
 	}
 
@@ -65,7 +66,7 @@ public class DisciplinaController {
 	public ModelAndView exibirEdicao(@PathVariable("id") Integer id) {
 		Disciplina disciplina = disciplinaService.buscarPorId(id);
 		ModelAndView mv = new ModelAndView("cadastros/disciplinas-list");
-		mv.addObject("lista", disciplinaService.listarTodas());	
+		mv.addObject("listaTodas", disciplinaService.listarTodas());
 		mv.addObject("listaCursos", cursoService.listarTodos());
 		mv.addObject("disciplina", disciplina);
 		return mv;

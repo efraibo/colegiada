@@ -26,6 +26,18 @@
 					placeholder="E-mail" th:field="*{email}" /></td>
 				</tr>
 				<tr>
+					<td>Áreas de Pesquisa: </td>
+					<td>
+						<select class="form-control" id="areasPesquisa" th:field="*{areasPesquisa}">
+							<option value="">Selecione área de pesquisa</option>
+							<option style="text-transform: capitalize"
+									th:each="item : ${listaAreasPesquisa}"
+									th:value="${item}"
+									th:text="${item.text}" selected="selected"></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
 					<td colspan="2" align="right">
 						<button type="submit" class="btn btn-primary"  name="action" value="salvar">Salvar</button>&nbsp;&nbsp;					
 						<button type="submit" class="btn btn-info" name="action" value="pesquisar">Pesquisar</button>&nbsp;&nbsp;
@@ -45,6 +57,7 @@
 				<tr>
 					<th>Nome</th>
 					<th>E-mail</th>
+					<th>Areas de Pesquisa</th>
 					<th>Editar</th>
 					<th>Remover</th>
 				</tr>
@@ -53,6 +66,7 @@
 				<tr th:each="professor : ${lista}">
 					<td th:text="${professor.nome}"></td>
 					<td th:text="${professor.email}"></td>
+					<td th:text="${professor.areasPesquisa.text}"></td>
 					<td><a class="btn btn-warning"
 						th:href="@{/professores/edit/{id}(id=${professor.id})}">Editar</a></td>
 					<td><a class="btn btn-warning"
