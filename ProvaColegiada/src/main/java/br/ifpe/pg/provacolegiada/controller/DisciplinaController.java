@@ -22,65 +22,70 @@ import javax.validation.Valid;
 @RequestMapping("/disciplinas/")
 public class DisciplinaController {
 
-	@Autowired
-	private DisciplinaService disciplinaService;
-	@Autowired
-	private CursoService cursoService;
+    @Autowired
+    private DisciplinaService disciplinaService;
+    @Autowired
+    private CursoService cursoService;
 
-	@RequestMapping(value="saveList", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView salvarPesquisarDisciplina(@Valid @ModelAttribute Disciplina disciplina, @RequestParam(value="action",
-		required=false) String action, Errors errors, RedirectAttributes ra) {
-		
-		if (action != null && action.equals("salvar")) {
-			return salvar(disciplina, errors, ra);
-		} else {
-			return pesquisar(disciplina);
-		}
-	}
-	
-	@GetMapping("list")
-	public ModelAndView pesquisar(Disciplina disciplina) {
-		ModelAndView mv = new ModelAndView("cadastros/disciplinas-list");
-		if (disciplina == null || disciplina.getNome() == null) {
-			mv.addObject("listaTodas", disciplinaService.listarTodas());
-		} else {
-			mv.addObject("lista", disciplinaService.buscarPorNomeCurso(disciplina.getNome(), disciplina.getCurso().getId())); // .buscarPorExemplo(disciplina)); // .buscarPorNome(disciplina.getNome()));	
-		}
-		mv.addObject("listaCursos", cursoService.listarTodos());
-		mv.addObject("disciplina", disciplina);
-		mv.addObject("listaPeriodos", EPeriodo.values());
-		return mv;
-	}
+    @RequestMapping(value = "saveList", method = {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView salvarPesquisarDisciplina(@Valid @ModelAttribute Disciplina disciplina, @RequestParam(value = "action",
+            required = false) String action, Errors errors, RedirectAttributes ra) {
 
-	private ModelAndView salvar(@Valid @ModelAttribute Disciplina disciplina, Errors errors, RedirectAttributes ra) {
-		if (errors.hasErrors()) {
-			ra.addFlashAttribute("mensagemErro", "Não foi possível salvar disciplina: " + errors.getFieldErrors());
-		} else {
-			try {
-				disciplinaService.salvar(disciplina);
-				ra.addFlashAttribute("mensagemSucesso", "Disciplina salva com sucesso [" + disciplina.getNome() + "]");
-			} catch (Exception e) {
-				ra.addFlashAttribute("mensagemErro", "Não foi possível salvar disciplina: " + e.getMessage());
-			}
-		}
-		return pesquisar(new Disciplina());
-	}
+        if (action != null && action.equals("salvar")) {
+            return salvar(disciplina, errors, ra);
+        } else {
+            return pesquisar(disciplina, ra);
+        }
+    }
 
-	@GetMapping("edit/{id}")
-	public ModelAndView exibirEdicao(@PathVariable("id") Integer id) {
-		Disciplina disciplina = disciplinaService.buscarPorId(id);
-		ModelAndView mv = new ModelAndView("cadastros/disciplinas-list");
-		mv.addObject("listaTodas", disciplinaService.listarTodas());
-		mv.addObject("listaCursos", cursoService.listarTodos());
-		mv.addObject("disciplina", disciplina);
-		return mv;
-	}
+    @GetMapping("list")
+    public ModelAndView pesquisar(Disciplina disciplina, RedirectAttributes ra) {
+        ModelAndView mv = new ModelAndView("cadastros/disciplinas-list");
+        if (disciplina == null || disciplina.getNome() == null) {
+            mv.addObject("listaTodas", disciplinaService.listarTodas());
+        } else {
+            mv.addObject("lista", disciplinaService.buscarPorNomeCurso(disciplina.getNome(), disciplina.getCurso().getId())); // .buscarPorExemplo(disciplina)); // .buscarPorNome(disciplina.getNome()));
+        }
+        mv.addObject("listaCursos", cursoService.listarTodos());
+        mv.addObject("disciplina", disciplina);
+        mv.addObject("listaPeriodos", EPeriodo.values());
 
-	@GetMapping("/remover/{id}")
-	public String remover(@PathVariable("id") Integer id, RedirectAttributes ra) {
-		disciplinaService.removerPorId(id);
-		ra.addFlashAttribute("mensagemSucesso", "Disciplina removida com sucesso");
-		return "redirect:/disciplinas/list";
-	}
+        //setando mensagens de erro no template
+        mv.addObject("mensagemErro", ra.getFlashAttributes().get("mensagemErro"));
+        mv.addObject("mensagemSucesso", ra.getFlashAttributes().get("mensagemSucesso"));
+
+        return mv;
+    }
+
+    private ModelAndView salvar(@Valid @ModelAttribute Disciplina disciplina, Errors errors, RedirectAttributes ra) {
+        if (errors.hasErrors()) {
+            ra.addFlashAttribute("mensagemErro", "Não foi possível salvar disciplina: " + errors.getFieldErrors());
+        } else {
+            try {
+                disciplinaService.salvar(disciplina);
+                ra.addFlashAttribute("mensagemSucesso", "Disciplina salva com sucesso [" + disciplina.getNome() + "]");
+            } catch (Exception e) {
+                ra.addFlashAttribute("mensagemErro", "Não foi possível salvar disciplina: " + e.getMessage());
+            }
+        }
+        return pesquisar(new Disciplina(), ra);
+    }
+
+    @GetMapping("edit/{id}")
+    public ModelAndView exibirEdicao(@PathVariable("id") Integer id) {
+        Disciplina disciplina = disciplinaService.buscarPorId(id);
+        ModelAndView mv = new ModelAndView("cadastros/disciplinas-list");
+        mv.addObject("listaTodas", disciplinaService.listarTodas());
+        mv.addObject("listaCursos", cursoService.listarTodos());
+        mv.addObject("disciplina", disciplina);
+        return mv;
+    }
+
+    @GetMapping("/remover/{id}")
+    public String remover(@PathVariable("id") Integer id, RedirectAttributes ra) {
+        disciplinaService.removerPorId(id);
+        ra.addFlashAttribute("mensagemSucesso", "Disciplina removida com sucesso");
+        return "redirect:/disciplinas/list";
+    }
 
 }

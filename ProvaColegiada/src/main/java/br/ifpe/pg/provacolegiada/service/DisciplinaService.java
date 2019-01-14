@@ -33,6 +33,7 @@ public class DisciplinaService {
 	}
 
 	public <S extends Disciplina> S salvar(S entity) {
+		repositorio.verificarTurmaIgual(entity.getCurso(), entity.getNome(), entity.getCargaHoraria());
 		return repositorio.saveAndFlush(entity);
 	}
 

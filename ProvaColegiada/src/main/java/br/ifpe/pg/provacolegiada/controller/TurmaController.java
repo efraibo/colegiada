@@ -23,73 +23,71 @@ import javax.validation.Valid;
 @RequestMapping("/turmas/")
 public class TurmaController {
 
-	@Autowired
-	private TurmaService turmaService;
-	@Autowired
-	private CursoService cursoService;
+    @Autowired
+    private TurmaService turmaService;
+    @Autowired
+    private CursoService cursoService;
 
-	@RequestMapping(value="saveList", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView salvarPesquisarTurma(@Valid @ModelAttribute Turma turma, @RequestParam(value="action",
-		required=false) String action, Errors errors, RedirectAttributes ra) {
-		
-		if (action != null && action.equals("salvar")) {
-			return salvar(turma, errors, ra);
-            //return "redirect:/turmas/salvar";
-		} else {
-			return pesquisar(turma, ra);
-            //return "redirect:/turmas/list";
-		}
-	}
-	
-	@GetMapping("list")
-	public ModelAndView pesquisar(Turma turma, RedirectAttributes ra) {
-		ModelAndView mv = new ModelAndView("cadastros/turmas-list");
-		if (turma == null || turma.getId() == null) {
-			mv.addObject("lista", turmaService.listarTodas());	
-		} else {
-			mv.addObject("lista", turmaService.buscarPorCurso(turma.getCurso())); 	
-		}
-		mv.addObject("listaCursos", cursoService.listarTodos());
-		mv.addObject("listaTurnos", ETurno.values());
-		mv.addObject("turma", turma);
-		mv.addObject("listaSituacao", ESituacao.values());
+    @RequestMapping(value = "saveList", method = {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView salvarPesquisarTurma(@Valid @ModelAttribute Turma turma, @RequestParam(value = "action",
+            required = false) String action, Errors errors, RedirectAttributes ra) {
 
-		//setando mensagens de erro no template
-		mv.addObject("mensagemErro",ra.getFlashAttributes().get("mensagemErro"));
-        mv.addObject("mensagemSucesso",ra.getFlashAttributes().get("mensagemSucesso"));
-		return mv;
-	}
+        if (action != null && action.equals("salvar")) {
+            return salvar(turma, errors, ra);
+        } else {
+            return pesquisar(turma, ra);
+        }
+    }
 
-	private ModelAndView salvar(@Valid @ModelAttribute Turma turma, Errors errors, RedirectAttributes ra) {
-		if (errors.hasErrors()) {
-			ra.addFlashAttribute("mensagemErro", "Não foi possível salvar turma: " + errors.getFieldErrors());
-		} else {
-			try {
-				turmaService.salvar(turma);
-				ra.addFlashAttribute("mensagemSucesso", "Turma salva com sucesso");
-			} catch (Exception e) {
-				ra.addFlashAttribute("mensagemErro", "Não foi possível salvar turma: " + e.getMessage());
-			}
+    @GetMapping("list")
+    public ModelAndView pesquisar(Turma turma, RedirectAttributes ra) {
+        ModelAndView mv = new ModelAndView("cadastros/turmas-list");
+        if (turma == null || turma.getId() == null) {
+            mv.addObject("lista", turmaService.listarTodas());
+        } else {
+            mv.addObject("lista", turmaService.buscarPorCurso(turma.getCurso()));
+        }
+        mv.addObject("listaCursos", cursoService.listarTodos());
+        mv.addObject("listaTurnos", ETurno.values());
+        mv.addObject("turma", turma);
+        mv.addObject("listaSituacao", ESituacao.values());
+
+        //setando mensagens de erro no template
+        mv.addObject("mensagemErro", ra.getFlashAttributes().get("mensagemErro"));
+        mv.addObject("mensagemSucesso", ra.getFlashAttributes().get("mensagemSucesso"));
+        return mv;
+    }
+
+    private ModelAndView salvar(@Valid @ModelAttribute Turma turma, Errors errors, RedirectAttributes ra) {
+        if (errors.hasErrors()) {
+            ra.addFlashAttribute("mensagemErro", "Não foi possível salvar turma: " + errors.getFieldErrors());
+        } else {
+            try {
+                turmaService.salvar(turma);
+                ra.addFlashAttribute("mensagemSucesso", "Turma salva com sucesso");
+            } catch (Exception e) {
+                ra.addFlashAttribute("mensagemErro", "Não foi possível salvar turma: " + e.getMessage());
+            }
         }
         return pesquisar(new Turma(), ra);
     }
 
-	@GetMapping("edit/{id}")
-	public ModelAndView exibirEdicao(@PathVariable("id") Integer id) {
-		Turma turma = turmaService.buscarPorId(id);
-		ModelAndView mv = new ModelAndView("cadastros/turmas-list");
-		mv.addObject("lista", turmaService.listarTodas());	
-		mv.addObject("listaCursos", cursoService.listarTodos());
-		mv.addObject("listaTurnos", ETurno.values());
-		mv.addObject("turma", turma);
-		return mv;
-	}
+    @GetMapping("edit/{id}")
+    public ModelAndView exibirEdicao(@PathVariable("id") Integer id) {
+        Turma turma = turmaService.buscarPorId(id);
+        ModelAndView mv = new ModelAndView("cadastros/turmas-list");
+        mv.addObject("lista", turmaService.listarTodas());
+        mv.addObject("listaCursos", cursoService.listarTodos());
+        mv.addObject("listaTurnos", ETurno.values());
+        mv.addObject("turma", turma);
+        return mv;
+    }
 
-	@GetMapping("/remover/{id}")
-	public String remover(@PathVariable("id") Integer id, RedirectAttributes ra) {
-		turmaService.removerPorId(id);
-		ra.addFlashAttribute("mensagemSucesso", "Turma removida com sucesso");
-		return "redirect:/turmas/list";
-	}
+    @GetMapping("/remover/{id}")
+    public String remover(@PathVariable("id") Integer id, RedirectAttributes ra) {
+        turmaService.removerPorId(id);
+        ra.addFlashAttribute("mensagemSucesso", "Turma removida com sucesso");
+        return "redirect:/turmas/list";
+    }
 
 }
