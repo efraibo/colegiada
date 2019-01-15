@@ -3,12 +3,68 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Colegiada - Questões</title>
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Colegiada - Cadastro de questões</title>
 </head>
 <body>
-<p:spinner />
+<div th:insert="header"></div>
+
+<div class="container">
+    <h2>Questões</h2>
+    <h5>Adicionar/Editar/Pesquisar:</h5>
+    <form class="form-narrow form-horizontal" method="post"
+          th:action="@{/questoes/saveList}" th:object="${questao}">
+        <input type="hidden" id="id" th:field="*{id}"/>
+        <table class="table table-striped">
+            <tr>
+                <td>Tipo de questão:</td>
+                <td>
+                    <select class="form-control" id="ETipoQuestao" th:field="*{ETipoQuestao}">
+                        <option value="">Selecione tipo de questão</option>
+                        <option style="text-transform: capitalize"
+                                th:each="item : ${listaTipoQuestao}"
+                                th:value="${item}"
+                                th:text="${item}" selected="selected"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right">
+                    <button type="submit" class="btn btn-primary" name="action" value="salvar">Salvar</button>&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-info" name="action" value="pesquisar">Pesquisar</button>&nbsp;&nbsp;
+                    <a th:href="@{/disciplinas/saveList}" class="btn btn-info">Nova Disciplina</a>
+                </td>
+            </tr>
+        </table>
+        <div class="alert alert-success" th:if="${mensagemSucesso}"
+             th:text="${mensagemSucesso}"></div>
+        <div class="alert alert-danger" th:if="${mensagemErro}"
+             th:text="${mensagemErro}"></div>
+    </form>
+    <hr/>
+    <h5>Lista de Disciplinas:</h5>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Tipo de questão</th>
+            <th>Editar</th>
+            <th>Remover</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="questao : ${listaTodas}">
+            <td th:text="${questao.ETipoQuestao}"></td>
+            <td><a class="btn btn-warning"
+                   th:href="@{/disciplinas/edit/{id}(id=${questao.id})}">Editar</a></td>
+            <td><a class="btn btn-warning"
+                   th:href="@{/disciplinas/remover/{id}(id=${questao.id})}">Remover</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <hr>
+
+    <h6>
+        <a th:href="@{/}">Home</a>
+    </h6>
+</div>
 </body>
 </html>

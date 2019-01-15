@@ -8,10 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import br.ifpe.pg.provacolegiada.model.Professor;
-import br.ifpe.pg.provacolegiada.model.Topico;
+import br.ifpe.pg.provacolegiada.model.enumerator.ETipoQuestao;
 import br.ifpe.pg.provacolegiada.negocio.NivelComplexidade;
-import br.ifpe.pg.provacolegiada.negocio.TipoQuestao;
 
 @Entity
 public class Questao {
@@ -19,7 +17,7 @@ public class Questao {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	@Enumerated(EnumType.STRING)
-	private TipoQuestao tipoQuestao;
+	private ETipoQuestao ETipoQuestao;
 	private String enunciado;
 	@ManyToOne
 	private Topico topico;
@@ -31,11 +29,11 @@ public class Questao {
 	public Questao() {
 		super();
 	}
-	public Questao(Integer id, TipoQuestao tipoQuestao, String enunciado, Topico topico,
-			NivelComplexidade nivelComplexidade, Professor autor) {
+	public Questao(Integer id, ETipoQuestao ETipoQuestao, String enunciado, Topico topico,
+				   NivelComplexidade nivelComplexidade, Professor autor) {
 		super();
 		this.id = id;
-		this.tipoQuestao = tipoQuestao;
+		this.ETipoQuestao = ETipoQuestao;
 		this.enunciado = enunciado;
 		this.topico = topico;
 		this.nivelComplexidade = nivelComplexidade;
@@ -47,11 +45,11 @@ public class Questao {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public TipoQuestao getTipoQuestao() {
-		return tipoQuestao;
+	public ETipoQuestao getETipoQuestao() {
+		return ETipoQuestao;
 	}
-	public void setTipoQuestao(TipoQuestao tipoQuestao) {
-		this.tipoQuestao = tipoQuestao;
+	public void setETipoQuestao(ETipoQuestao ETipoQuestao) {
+		this.ETipoQuestao = ETipoQuestao;
 	}
 	public String getEnunciado() {
 		return enunciado;

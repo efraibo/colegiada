@@ -13,7 +13,7 @@ public class QuestaoService {
     @Autowired
     private QuestaoRepository repositorio;
 
-    public List<Questao> listarTodos() {
+    public List<Questao> listarTodas() {
         return repositorio.findAll();
     }
 
