@@ -20,7 +20,7 @@ public class Turma {
     @ManyToOne
     private Curso curso;
     @Enumerated(EnumType.STRING)
-    private br.ifpe.pg.provacolegiada.model.enumerator.ETurno ETurno;
+    private ETurno turno;
     private int ano;
     private int entrada;
     @Enumerated(EnumType.STRING)
@@ -46,12 +46,12 @@ public class Turma {
         this.curso = curso;
     }
 
-    public ETurno getETurno() {
-        return ETurno;
+    public ETurno getTurno() {
+        return turno;
     }
 
-    public void setETurno(ETurno ETurno) {
-        this.ETurno = ETurno;
+    public void setTurno(ETurno turno) {
+        this.turno = turno;
     }
 
     public int getAno() {

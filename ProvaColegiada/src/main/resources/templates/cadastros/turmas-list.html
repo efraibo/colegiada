@@ -30,7 +30,7 @@
 				<tr>
 					<td>Turno</td>
 					<td>
-						<select class="form-control" id="ETurno" th:field="*{ETurno}">
+						<select class="form-control" id="turno" th:field="*{turno}">
 							<option style="text-transform: capitalize"
 								th:each="item : ${listaTurnos}" 
 								th:value="${item}"	
@@ -93,7 +93,7 @@
 			<tbody>
 				<tr th:each="turma : ${lista}">
 					<td th:text="${turma.curso.nome}"></td>
-					<td th:text="${turma.ETurno.text}"></td>
+					<td th:text="${turma.turno.text}"></td>
 					<td th:text="${turma.ano}"></td>
 					<td th:text="${turma.entrada}"></td>
 					<td th:text="${turma.situacao.text}"></td>
