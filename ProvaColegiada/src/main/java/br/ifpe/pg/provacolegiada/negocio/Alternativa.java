@@ -1,5 +1,7 @@
 package br.ifpe.pg.provacolegiada.negocio;
 
+import br.ifpe.pg.provacolegiada.model.Questao;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

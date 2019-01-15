@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import br.ifpe.pg.provacolegiada.model.Questao;
 import br.ifpe.pg.provacolegiada.model.Topico;
 import br.ifpe.pg.provacolegiada.model.TurmaDisciplina;
 

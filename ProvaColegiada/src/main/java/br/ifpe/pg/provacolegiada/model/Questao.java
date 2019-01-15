@@ -1,4 +1,4 @@
-package br.ifpe.pg.provacolegiada.negocio;
+package br.ifpe.pg.provacolegiada.model;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 
 import br.ifpe.pg.provacolegiada.model.Professor;
 import br.ifpe.pg.provacolegiada.model.Topico;
+import br.ifpe.pg.provacolegiada.negocio.NivelComplexidade;
+import br.ifpe.pg.provacolegiada.negocio.TipoQuestao;
 
 @Entity
 public class Questao {
