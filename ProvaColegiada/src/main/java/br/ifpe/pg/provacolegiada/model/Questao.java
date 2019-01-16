@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import br.ifpe.pg.provacolegiada.model.enumerator.ETipoQuestao;
-import br.ifpe.pg.provacolegiada.negocio.NivelComplexidade;
+import br.ifpe.pg.provacolegiada.model.enumerator.ENivelComplexidade;
 
 @Entity
 public class Questao {
@@ -22,7 +22,7 @@ public class Questao {
 	@ManyToOne
 	private Topico topico;
 	@Enumerated(EnumType.STRING)
-	private NivelComplexidade nivelComplexidade;
+	private ENivelComplexidade ENivelComplexidade;
 	@ManyToOne
 	private Professor autor;
 	
@@ -30,13 +30,13 @@ public class Questao {
 		super();
 	}
 	public Questao(Integer id, ETipoQuestao ETipoQuestao, String enunciado, Topico topico,
-				   NivelComplexidade nivelComplexidade, Professor autor) {
+				   ENivelComplexidade ENivelComplexidade, Professor autor) {
 		super();
 		this.id = id;
 		this.ETipoQuestao = ETipoQuestao;
 		this.enunciado = enunciado;
 		this.topico = topico;
-		this.nivelComplexidade = nivelComplexidade;
+		this.ENivelComplexidade = ENivelComplexidade;
 		this.setAutor(autor);
 	}
 	public Integer getId() {
@@ -63,11 +63,11 @@ public class Questao {
 	public void setTopico(Topico topico) {
 		this.topico = topico;
 	}
-	public NivelComplexidade getNivelComplexidade() {
-		return nivelComplexidade;
+	public ENivelComplexidade getENivelComplexidade() {
+		return ENivelComplexidade;
 	}
-	public void setNivelComplexidade(NivelComplexidade nivelComplexidade) {
-		this.nivelComplexidade = nivelComplexidade;
+	public void setENivelComplexidade(ENivelComplexidade ENivelComplexidade) {
+		this.ENivelComplexidade = ENivelComplexidade;
 	}
 	public Professor getAutor() {
 		return autor;

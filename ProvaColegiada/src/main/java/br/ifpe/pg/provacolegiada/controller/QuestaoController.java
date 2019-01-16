@@ -1,8 +1,11 @@
 package br.ifpe.pg.provacolegiada.controller;
 
 import br.ifpe.pg.provacolegiada.model.Questao;
+import br.ifpe.pg.provacolegiada.model.enumerator.ENivelComplexidade;
 import br.ifpe.pg.provacolegiada.model.enumerator.ETipoQuestao;
+import br.ifpe.pg.provacolegiada.service.ProfessorService;
 import br.ifpe.pg.provacolegiada.service.QuestaoService;
+import br.ifpe.pg.provacolegiada.service.TopicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -24,6 +27,12 @@ public class QuestaoController {
     @Autowired
     private QuestaoService questaoService;
 
+    @Autowired
+    private ProfessorService professorService;
+
+    @Autowired
+    private TopicoService topicoService;
+
     @RequestMapping(value = "saveList", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView salvarPesquisarQuestao(@Valid @ModelAttribute Questao questao, @RequestParam(value = "action",
             required = false) String action, Errors errors, RedirectAttributes ra) {
@@ -40,9 +49,11 @@ public class QuestaoController {
         ModelAndView mv = new ModelAndView("cadastros/questoes-list");
 
         mv.addObject("listaTodas", questaoService.listarTodas());
-
         mv.addObject("questao", questao);
         mv.addObject("listaTipoQuestao", ETipoQuestao.values());
+        mv.addObject("listaNivelComplexidade", ENivelComplexidade.values());
+        mv.addObject("listarTodosProfessores", professorService.listarTodas());
+        mv.addObject("listaTodosTopicos", topicoService.listarTodos());
 
         //setando mensagens de erro no template
         mv.addObject("mensagemErro", ra.getFlashAttributes().get("mensagemErro"));
@@ -57,7 +68,7 @@ public class QuestaoController {
         } else {
             try {
                 questaoService.salvar(questao);
-                ra.addFlashAttribute("mensagemSucesso", "Disciplina salva com sucesso [" + questao.getEnunciado() + "]");
+                ra.addFlashAttribute("mensagemSucesso", "Questão salva com sucesso!");
             } catch (Exception e) {
                 ra.addFlashAttribute("mensagemErro", "Não foi possível salvar questao: " + e.getMessage());
             }
@@ -68,7 +79,7 @@ public class QuestaoController {
     @GetMapping("edit/{id}")
     public ModelAndView exibirEdicao(@PathVariable("id") Integer id) {
         Questao questao = questaoService.buscarPorId(id);
-        ModelAndView mv = new ModelAndView("cadastros/disciplinas-list");
+        ModelAndView mv = new ModelAndView("cadastros/questoes-list");
         mv.addObject("listaTodas", questaoService.listarTodas());
         mv.addObject("questao", questao);
         return mv;
@@ -78,7 +89,7 @@ public class QuestaoController {
     public String remover(@PathVariable("id") Integer id, RedirectAttributes ra) {
         questaoService.removerPorId(id);
         ra.addFlashAttribute("mensagemSucesso", "Questão removida com sucesso");
-        return "redirect:/questao/list";
+        return "redirect:/questoes/list";
     }
 
 }

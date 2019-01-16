@@ -77,6 +77,7 @@ public class DisciplinaController {
         ModelAndView mv = new ModelAndView("cadastros/disciplinas-list");
         mv.addObject("listaTodas", disciplinaService.listarTodas());
         mv.addObject("listaCursos", cursoService.listarTodos());
+        mv.addObject("listaPeriodos", EPeriodo.values());
         mv.addObject("disciplina", disciplina);
         return mv;
     }

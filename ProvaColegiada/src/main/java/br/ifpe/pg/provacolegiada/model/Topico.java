@@ -59,5 +59,9 @@ public class Topico {
 	public void setDisciplina(Disciplina disciplina) {
 		this.disciplina = disciplina;
 	}
-	
+
+	@Override
+	public String toString() {
+		return  descricao;
+	}
 }

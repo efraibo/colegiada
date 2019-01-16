@@ -18,12 +18,57 @@
             <tr>
                 <td>Tipo de questão:</td>
                 <td>
-                    <select class="form-control" id="ETipoQuestao" th:field="*{ETipoQuestao}">
+                    <select class="form-control" id="tipoQuestao" th:field="*{ETipoQuestao}">
                         <option value="">Selecione tipo de questão</option>
                         <option style="text-transform: capitalize"
                                 th:each="item : ${listaTipoQuestao}"
                                 th:value="${item}"
-                                th:text="${item}" selected="selected"></option>
+                                th:text="${item.text}" selected="selected"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Topico:</td>
+                <td>
+                    <select class="form-control" id="topico" th:field="*{topico}">
+                        <option value="">Selecione o topico</option>
+                        <option style="text-transform: capitalize"
+                                th:each="item : ${listaTodosTopicos}"
+                                th:value="${item.id}"
+                                th:text="${item.descricao}" selected="selected"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Enunciado</td>
+                <td>
+                    <textarea class="form-control" rows="4"
+                               style="margin-top: 10px;"  placeholder="Enunciado da questão"
+                               name="enunciado" th:inline="text" th:field="*{enunciado}">
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>Nível de Complexidade:</td>
+                <td>
+                    <select class="form-control" id="nivelComplexidade" th:field="*{ENivelComplexidade}">
+                        <option value="">Selecione o nível da complexidade</option>
+                        <option style="text-transform: capitalize"
+                                th:each="item : ${listaNivelComplexidade}"
+                                th:value="${item}"
+                                th:text="${item.text}" selected="selected"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Autor:</td>
+                <td>
+                    <select class="form-control" id="autor" th:field="*{autor}">
+                        <option value="">Selecione o autor</option>
+                        <option style="text-transform: capitalize"
+                                th:each="item : ${listarTodosProfessores}"
+                                th:value="${item.id}"
+                                th:text="${item.nome}" selected="selected"></option>
                     </select>
                 </td>
             </tr>
@@ -31,7 +76,6 @@
                 <td colspan="2" align="right">
                     <button type="submit" class="btn btn-primary" name="action" value="salvar">Salvar</button>&nbsp;&nbsp;
                     <button type="submit" class="btn btn-info" name="action" value="pesquisar">Pesquisar</button>&nbsp;&nbsp;
-                    <a th:href="@{/disciplinas/saveList}" class="btn btn-info">Nova Disciplina</a>
                 </td>
             </tr>
         </table>
@@ -41,18 +85,26 @@
              th:text="${mensagemErro}"></div>
     </form>
     <hr/>
-    <h5>Lista de Disciplinas:</h5>
+    <h5>Lista de Questões:</h5>
     <table class="table table-striped">
         <thead>
         <tr>
             <th>Tipo de questão</th>
+            <th>Enunciado</th>
+            <th>Topico</th>
+            <th>Nível de Complexidade</th>
+            <th>Autor</th>
             <th>Editar</th>
             <th>Remover</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="questao : ${listaTodas}">
-            <td th:text="${questao.ETipoQuestao}"></td>
+            <td th:text="${questao.ETipoQuestao.text}"></td>
+            <td th:text="${questao.enunciado}"></td>
+            <td th:text="${questao.topico}"></td>
+            <td th:text="${questao.ENivelComplexidade.text}"></td>
+            <td th:text="${questao.autor}"></td>
             <td><a class="btn btn-warning"
                    th:href="@{/disciplinas/edit/{id}(id=${questao.id})}">Editar</a></td>
             <td><a class="btn btn-warning"
