@@ -1,4 +1,4 @@
-package br.ifpe.pg.provacolegiada.negocio;
+package br.ifpe.pg.provacolegiada.model;
 
 import java.time.LocalDate;
 import java.util.List;

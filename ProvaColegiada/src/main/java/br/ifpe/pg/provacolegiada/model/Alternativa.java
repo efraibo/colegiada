@@ -1,4 +1,4 @@
-package br.ifpe.pg.provacolegiada.negocio;
+package br.ifpe.pg.provacolegiada.model;
 
 import br.ifpe.pg.provacolegiada.model.Questao;
 

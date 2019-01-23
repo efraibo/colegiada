@@ -47,7 +47,7 @@ public class TurmaController {
         } else {
             mv.addObject("lista", turmaService.buscarPorCurso(turma.getCurso()));
         }
-        mv.addObject("listaCursos", cursoService.listarTodos());
+        mv.addObject("listaCursos", cursoService.listarCursosCustomizados());
         mv.addObject("listaTurnos", ETurno.values());
         mv.addObject("turma", turma);
         mv.addObject("listaSituacao", ESituacao.values());

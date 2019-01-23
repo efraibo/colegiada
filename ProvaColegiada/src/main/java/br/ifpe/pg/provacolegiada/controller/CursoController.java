@@ -5,6 +5,7 @@ import br.ifpe.pg.provacolegiada.service.ProfessorService;
 import br.ifpe.pg.provacolegiada.model.Curso;
 import br.ifpe.pg.provacolegiada.model.enumerator.EModalidade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/cursos/")
+@Secured("ROLE_ADMIN")
 public class CursoController {
 
 	@Autowired
